@@ -14,13 +14,8 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.login);
 
-    TextView signup = (TextView) findViewById(R.id.link_signup);
-    signup.setOnClickListener(new View.OnClickListener() {
-      public void onClick(View v) {
-        Intent nextScreen = new Intent(MainActivity.this, signup.class);
-        startActivityForResult(nextScreen, 1);
-      }
-    });
+    Intent nextScreen = new Intent(MainActivity.this, Login.class);
+    startActivityForResult(nextScreen, 1);
 
   }
 }
