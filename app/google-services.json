@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "620999894928",
+    "firebase_url": "https://activityworkflow-fb86a.firebaseio.com",
+    "project_id": "activityworkflow-fb86a",
+    "storage_bucket": "activityworkflow-fb86a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:620999894928:android:ee446d528d83bdcb",
+        "android_client_info": {
+          "package_name": "com.example.koder.activityworkflow"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "620999894928-pmtl9gkpsn3et1s0fg6vtavili5f3ba4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.koder.activityworkflow",
+            "certificate_hash": "a71a161c1a107906e4be048cc0a7926fdf4962a8"
+          }
+        },
+        {
+          "client_id": "620999894928-6qnigrl4b2mtob0t4098qthm449gpkb9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDX5EyR2vx3_zHYPd-M_0-CRTpBmnRzEsU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "620999894928-6qnigrl4b2mtob0t4098qthm449gpkb9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
