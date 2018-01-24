@@ -21,8 +21,8 @@
             android:layout_height="wrap_content"
             android:contentDescription="AIT Logo and Name"
             android:src="@drawable/aitlogo"
-            android:maxWidth="108dp"
-            android:maxHeight="60dp"
+            android:maxWidth="180dp"
+            android:maxHeight="100dp"
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
             />

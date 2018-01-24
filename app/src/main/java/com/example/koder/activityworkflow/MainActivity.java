@@ -80,8 +80,6 @@ public class MainActivity extends BaseActivity implements
     // [START initialize_auth]
     mAuth = FirebaseAuth.getInstance();
     // [END initialize_auth]
-
-
   }
 
   // [START on_start_check_user]
@@ -187,11 +185,13 @@ public class MainActivity extends BaseActivity implements
   private void updateUI(FirebaseUser user) {
     hideProgressDialog();
     if (user != null) {
+      /*
       mStatusTextView.setText(getString(R.string.google_status_fmt, user.getEmail()));
       mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));
 
       findViewById(R.id.sign_in_button).setVisibility(View.GONE);
       findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
+      */
 
       Intent loggedIn = new Intent(MainActivity.this, MainActivity2.class);
       startActivity(loggedIn);
