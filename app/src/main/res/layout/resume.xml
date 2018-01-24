@@ -13,7 +13,7 @@
             android:layout_gravity="center"
             android:orientation="vertical"
             android:gravity="center"
-            android:text="This is the profile page"
+            android:text="This is the Résumé page"
             />
     </LinearLayout>
 </RelativeLayout>

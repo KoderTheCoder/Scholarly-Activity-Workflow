@@ -121,13 +121,13 @@ public class MainActivity2 extends AppCompatActivity
         if (id == R.id.profile) {
             fragmentManager.beginTransaction().replace(R.id.content_frame, new ProfileFragment()).commit();
         } else if (id == R.id.nav_gallery) {
-            fragmentManager.beginTransaction().replace(R.id.content_frame, new ProfileFragment()).commit();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, new AddActivityFragment()).commit();
         } else if (id == R.id.nav_slideshow) {
-            fragmentManager.beginTransaction().replace(R.id.content_frame, new ProfileFragment()).commit();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, new ViewActivitiesFragment()).commit();
         } else if (id == R.id.nav_manage) {
-
+            fragmentManager.beginTransaction().replace(R.id.content_frame, new ResumeFragment()).commit();
         } else if (id == R.id.nav_share) {
-
+            fragmentManager.beginTransaction().replace(R.id.content_frame, new AboutFragment()).commit();
         } else if (id == R.id.nav_send) {
 
         }
