@@ -6,28 +6,18 @@ package com.example.koder.activityworkflow;
 
 public class Activity {
 
-    Integer ID;
     String activityName;
     String hours;
     String date;
     Boolean approval;
     String location;
 
-    public Activity(Integer ID, String activityName, String hours, String date, Boolean approval, String location) {
-        this.ID = ID;
+    public Activity( String activityName, String hours, String date, Boolean approval, String location) {
         this.activityName = activityName;
         this.hours = hours;
         this.date = date;
         this.approval = approval;
         this.location = location;
-    }
-
-    public Integer getID() {
-        return ID;
-    }
-
-    public void setID(Integer ID) {
-        this.ID = ID;
     }
 
     public String getActivityName() {

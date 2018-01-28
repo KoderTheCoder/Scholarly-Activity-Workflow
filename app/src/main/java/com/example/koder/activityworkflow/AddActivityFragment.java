@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created by Koder on 1/24/2018.
@@ -29,11 +31,14 @@ public class AddActivityFragment extends Fragment {
     private DatabaseReference mDatabase;
 
     private Button btnAdd;
-    private EditText etText;
+    private EditText etTextN;
+    private EditText etTextH;
+    private EditText etTextD;
+    private EditText etTextL;
     private ListView listView;
 
-    private ArrayList<String> arrayList = new ArrayList<>();
-    private ArrayAdapter<String> adapter;
+    private ArrayList<Activity> arrayList = new ArrayList<Activity>();
+    private ArrayAdapter<Activity> adapter;
 
     @Nullable
     @Override
@@ -44,31 +49,51 @@ public class AddActivityFragment extends Fragment {
 
         mDatabase = FirebaseDatabase.getInstance().getReference("activity");
 
-        adapter = new ArrayAdapter<String>(myView.getContext(), android.R.layout.simple_list_item_1,arrayList);
+        adapter = new ArrayAdapter<>(myView.getContext(), android.R.layout.simple_list_item_1,arrayList);
 
-        btnAdd = (Button) myView.findViewById(R.id.addAct);
-        etText = (EditText) myView.findViewById(R.id.EditeName);
-        listView = (ListView) myView.findViewById(R.id.dbListView);
+        btnAdd = myView.findViewById(R.id.addAct);
+        etTextN = myView.findViewById(R.id.EditeName);
+        etTextH = myView.findViewById(R.id.hours);
+        etTextD = myView.findViewById(R.id.date);
+        etTextL = myView.findViewById(R.id.location);
+        listView = myView.findViewById(R.id.dbListView);
 
         listView.setAdapter(adapter);
+
+        final Activity activity = new Activity("","","",false,"");
+
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 String id = mDatabase.push().getKey();
-                //mDatabase.push().setValue(etText.getText().toString());
-                mDatabase.child(id).setValue("gello");
+                activity.activityName = etTextN.getText().toString();
+                activity.hours = etTextH.getText().toString();
+                activity.date = etTextD.getText().toString();
+                activity.location = etTextL.getText().toString();
+
+                mDatabase.setValue(activity);
             }
         });
 
-        mDatabase.addChildEventListener(new ChildEventListener() {
+        //this part doesnt work prob cos you need to get the id
+        mDatabase.child("activity").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
-                String string = dataSnapshot.getValue(String.class);
-                arrayList.add(string);
+                for (DataSnapshot post : dataSnapshot.getChildren()) {
+                    String name = post.child("activityName").getValue(String.class);
+                    String hours = post.child("hours").getValue(String.class);
+                    String date = post.child("hours").getValue(String.class);
+                    Boolean approval = post.child("approval").getValue(Boolean.class);
+                    String location = post.child("location").getValue(String.class);
+                    Log.w("TAG",name + " /" + hours + " /" + date + " /" + approval + " /" + location);
+                }
                 adapter.notifyDataSetChanged();
+//                String string = dataSnapshot.getValue(String.class);
+//                arrayList.add(string);
+//                adapter.notifyDataSetChanged();
 
             }
 
