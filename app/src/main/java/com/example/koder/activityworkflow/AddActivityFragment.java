@@ -57,8 +57,8 @@ public class AddActivityFragment extends Fragment {
             public void onClick(View v) {
 
                 String id = mDatabase.push().getKey();
-                mDatabase.child(id).setValue("usdwer");
-
+                //mDatabase.push().setValue(etText.getText().toString());
+                mDatabase.child(id).setValue("gello");
             }
         });
 
