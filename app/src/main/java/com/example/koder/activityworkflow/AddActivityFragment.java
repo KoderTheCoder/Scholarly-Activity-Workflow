@@ -42,7 +42,7 @@ public class AddActivityFragment extends Fragment {
         View myView;
         myView = inflater.inflate(R.layout.add_activity, container, false);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase = FirebaseDatabase.getInstance().getReference("activity");
 
         adapter = new ArrayAdapter<String>(myView.getContext(), android.R.layout.simple_list_item_1,arrayList);
 
@@ -55,7 +55,10 @@ public class AddActivityFragment extends Fragment {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mDatabase.push().setValue(etText.getText().toString());
+
+                String id = mDatabase.push().getKey();
+                mDatabase.child(id).setValue("usdwer");
+
             }
         });
 
