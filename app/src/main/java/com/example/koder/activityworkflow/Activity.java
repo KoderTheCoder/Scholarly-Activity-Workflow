@@ -7,17 +7,25 @@ package com.example.koder.activityworkflow;
 public class Activity {
 
     String activityName;
+    String UID;
     String hours;
     String date;
     Boolean approval;
     String location;
+    String price;
 
-    public Activity( String activityName, String hours, String date, Boolean approval, String location) {
+    public Activity(){
+
+    }
+
+    public Activity(String activityName, String UID, String hours, String date, Boolean approval, String location, String price) {
         this.activityName = activityName;
+        this.UID = UID;
         this.hours = hours;
         this.date = date;
         this.approval = approval;
         this.location = location;
+        this.price = price;
     }
 
     public String getActivityName() {
@@ -26,6 +34,14 @@ public class Activity {
 
     public void setActivityName(String activityName) {
         this.activityName = activityName;
+    }
+
+    public String getUID() {
+        return UID;
+    }
+
+    public void setUID(String UID) {
+        this.UID = UID;
     }
 
     public String getHours() {
@@ -59,5 +75,14 @@ public class Activity {
     public void setLocation(String location) {
         this.location = location;
     }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
 }
+
 

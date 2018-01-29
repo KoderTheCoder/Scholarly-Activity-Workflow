@@ -27,8 +27,8 @@
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/hours"
-        android:hint="Enter Date"
-        android:inputType="date" />
+        android:hint="Enter Date:  DD/MM/YYYY"
+        android:inputType="datetime" />
 
     <EditText
         android:id="@+id/location"
@@ -39,21 +39,22 @@
         android:hint="Enter Location"
         android:inputType="text" />
 
+    <EditText
+        android:id="@+id/price"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/location"
+        android:hint="Enter Amount Spent"
+        android:inputType="numberDecimal" />
+
 
     <Button
         android:id="@+id/addAct"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/EditeName"
-        android:layout_marginTop="141dp"
+        android:layout_below="@+id/price"
         android:text="Add" />
-
-    <ListView
-        android:id="@+id/dbListView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/addAct" />
 
 </RelativeLayout>

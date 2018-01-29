@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,10 +37,8 @@ public class AddActivityFragment extends Fragment {
     private EditText etTextH;
     private EditText etTextD;
     private EditText etTextL;
-    private ListView listView;
-
-    private ArrayList<Activity> arrayList = new ArrayList<Activity>();
-    private ArrayAdapter<Activity> adapter;
+    private EditText etTextP;
+    private FirebaseAuth mAuth;
 
     @Nullable
     @Override
@@ -47,77 +47,43 @@ public class AddActivityFragment extends Fragment {
         View myView;
         myView = inflater.inflate(R.layout.add_activity, container, false);
 
+        //database
         mDatabase = FirebaseDatabase.getInstance().getReference("activity");
 
-        adapter = new ArrayAdapter<>(myView.getContext(), android.R.layout.simple_list_item_1,arrayList);
+        mAuth = FirebaseAuth.getInstance();
+
+        //getting user
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String name = user.getDisplayName();
+        String email = user.getEmail();
+        final String uid = user.getUid();
 
         btnAdd = myView.findViewById(R.id.addAct);
         etTextN = myView.findViewById(R.id.EditeName);
         etTextH = myView.findViewById(R.id.hours);
         etTextD = myView.findViewById(R.id.date);
         etTextL = myView.findViewById(R.id.location);
-        listView = myView.findViewById(R.id.dbListView);
+        etTextP = myView.findViewById(R.id.price);
 
-        listView.setAdapter(adapter);
+        //Activity
+        final Activity activity = new Activity("","","","",false,"","");
 
-        final Activity activity = new Activity("","","",false,"");
-
-
+        //Button
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 String id = mDatabase.push().getKey();
                 activity.activityName = etTextN.getText().toString();
+                activity.UID = uid;
                 activity.hours = etTextH.getText().toString();
                 activity.date = etTextD.getText().toString();
                 activity.location = etTextL.getText().toString();
+                activity.price = etTextP.getText().toString();
 
-                mDatabase.setValue(activity);
+                mDatabase.child(id).setValue(activity);
             }
         });
-
-        //this part doesnt work prob cos you need to get the id
-        mDatabase.child("activity").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
-                for (DataSnapshot post : dataSnapshot.getChildren()) {
-                    String name = post.child("activityName").getValue(String.class);
-                    String hours = post.child("hours").getValue(String.class);
-                    String date = post.child("hours").getValue(String.class);
-                    Boolean approval = post.child("approval").getValue(Boolean.class);
-                    String location = post.child("location").getValue(String.class);
-                    Log.w("TAG",name + " /" + hours + " /" + date + " /" + approval + " /" + location);
-                }
-                adapter.notifyDataSetChanged();
-//                String string = dataSnapshot.getValue(String.class);
-//                arrayList.add(string);
-//                adapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
 
         return myView;
     }
