@@ -1,12 +1,14 @@
 package com.example.koder.activityworkflow;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -35,10 +37,12 @@ public class ViewActivitiesFragment extends Fragment {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     MyAdapter adapter;
+    AdminAdapterView adapterAdmin;
     ListView mListView;
     String name;
     ArrayList<Activity> activityArray;
-    boolean admin = false;
+    boolean approval;
+    boolean adminView;
 
 
 
@@ -50,6 +54,9 @@ public class ViewActivitiesFragment extends Fragment {
         mListView = (ListView) myView.findViewById(R.id.listviewAct);
         activityArray = new ArrayList<>();
 
+        if(getArguments() != null){
+            approval = true;
+        }
 
         //database stuff
         mAuth = FirebaseAuth.getInstance();
@@ -57,9 +64,6 @@ public class ViewActivitiesFragment extends Fragment {
         DatabaseReference myRef = mFireDatabase.getReference();
         FirebaseUser user = mAuth.getCurrentUser();
         String userID = user.getUid();
-        if(myRef.child("admins").child(userID) != null){
-            admin = true;
-        }
         //query
         Query filterQuery = myRef.child("activity").orderByChild("uid").equalTo(userID);
         filterQuery.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -86,23 +90,48 @@ public class ViewActivitiesFragment extends Fragment {
                 //array.add(childCount + " Activities");
                 int count = 0;
 
-                for(DataSnapshot ds : dataSnapshot.child("activity").getChildren()){
-                    Activity activity = ds.getValue(Activity.class);
-                    if(activity.getUID().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
-                        activityArray.add(activity);
-                        count++;
+                if(approval){
+                    for(DataSnapshot ds : dataSnapshot.child("activity").getChildren()){
+                        Activity activity = ds.getValue(Activity.class);
+                        if(activity.getApproval() == false){
+                            activityArray.add(activity);
+                            count++;
+                        }
                     }
+                    adapterAdmin = new AdminAdapterView(getActivity(), activityArray);
+                    mListView.setAdapter(adapterAdmin);
+                    adapterAdmin.notifyDataSetChanged();
+                }else if(adminView){
+
+                }else{
+                    for(DataSnapshot ds : dataSnapshot.child("activity").getChildren()){
+                        Activity activity = ds.getValue(Activity.class);
+                        if(activity.getUID().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                            activityArray.add(activity);
+                            count++;
+                        }
+                    }
+                    adapter = new MyAdapter(getActivity(), activityArray);
+                    mListView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
                 }
                 TextView numActivities= (TextView)myView.findViewById(R.id.numberOfActivities);
                 numActivities.setText(Integer.toString(count) + " Activities");
-                adapter = new MyAdapter(getActivity(), activityArray);
-                mListView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
+            }
+        });
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Activity item = (Activity)parent.getItemAtPosition(position);
+                Intent nextScreen = new Intent(myView.getContext(), ViewActivity.class);
+                nextScreen.putExtra("Activity", item);
+                startActivity(nextScreen);
             }
         });
 

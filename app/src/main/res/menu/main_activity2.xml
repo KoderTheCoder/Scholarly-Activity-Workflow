@@ -6,4 +6,9 @@
         android:orderInCategory="100"
         android:title="Logout"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/approve_activities_button"
+        android:orderInCategory="100"
+        android:title="Approve Activities"
+        app:showAsAction="never" />
 </menu>

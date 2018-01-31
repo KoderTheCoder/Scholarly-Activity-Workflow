@@ -1,6 +1,7 @@
 package com.example.koder.activityworkflow;
 
 import android.content.ClipData;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -24,6 +25,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity2 extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -90,6 +95,27 @@ public class MainActivity2 extends AppCompatActivity
         }
     }
 
+    public boolean onPrepareOptionsMenu(Menu menu)
+    {
+        final MenuItem item = menu.findItem(R.id.approve_activities_button);
+
+        FirebaseDatabase.getInstance().getReference().child("admins")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            if(!(snapshot.getValue(User.class).getEmail().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail()))){
+                                item.setVisible(false);
+                            }
+                        }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+        return true;
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -108,6 +134,13 @@ public class MainActivity2 extends AppCompatActivity
         if (id == R.id.logout_button) {
             signOut();
             return true;
+        }else if(id == R.id.approve_activities_button){
+            Bundle bundle = new Bundle();
+            bundle.putString("Approval", "TRUE");
+            ViewActivitiesFragment frag = new ViewActivitiesFragment();
+            frag.setArguments(bundle);
+            android.app.FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, frag).commit();
         }
 
         return super.onOptionsItemSelected(item);

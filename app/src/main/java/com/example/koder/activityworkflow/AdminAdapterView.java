@@ -10,8 +10,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 //Adapter takes data and tries to map it to a layout
-public class MyAdapter extends ArrayAdapter<Activity> {
-    public MyAdapter(Context context, ArrayList<Activity> values){
+public class AdminAdapterView extends ArrayAdapter<Activity> {
+    public AdminAdapterView(Context context, ArrayList<Activity> values){
         //context(current activity)
         //then which row layout to use
         //which part of the row layout can we change the text
@@ -45,8 +45,8 @@ public class MyAdapter extends ArrayAdapter<Activity> {
         Activity text = getItem(position);
 
         //change the rowText's text
-        rowText.setText(text.getActivityName());
-        rowActivity.setText(text.getLocation());
+        rowText.setText(text.getUsername());
+        rowActivity.setText(text.getActivityName());
         rowDate.setText(text.getDate());
 
 

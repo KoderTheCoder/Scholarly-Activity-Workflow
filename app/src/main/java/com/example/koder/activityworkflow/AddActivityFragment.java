@@ -2,29 +2,19 @@ package com.example.koder.activityworkflow;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.ArrayList;
-import java.util.Map;
 
 /**
  * Created by Koder on 1/24/2018.
@@ -76,13 +66,14 @@ public class AddActivityFragment extends Fragment {
             public void onClick(View v) {
 
                 String id = mDatabase.push().getKey();
-                activity.activityName = etTextN.getText().toString();
-                activity.UID = uid;
-                activity.hours = etTextH.getText().toString();
-                activity.date = etTextD.getText().toString();
-                activity.location = etTextL.getText().toString();
-                activity.price = etTextP.getText().toString();
-                activity.username = mAuth.getCurrentUser().getDisplayName();
+                activity.setActivityName(etTextN.getText().toString());
+                activity.setUID(uid);
+                activity.setHours(etTextH.getText().toString());
+                activity.setDate(etTextD.getText().toString());
+                activity.setLocation(etTextL.getText().toString());
+                activity.setPrice(etTextP.getText().toString());
+                activity.setUsername(mAuth.getCurrentUser().getDisplayName());
+                activity.setEmail(mAuth.getCurrentUser().getEmail());
 
                 try{
                     mDatabase.child(id).setValue(activity);

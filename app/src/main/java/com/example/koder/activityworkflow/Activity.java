@@ -1,32 +1,35 @@
 package com.example.koder.activityworkflow;
 
+import java.io.Serializable;
+
 /**
  * Created by ShivM on 24-Jan-18.
  */
 
-public class Activity {
+public class Activity implements Serializable{
 
-    String activityName;
-    String UID;
-    String hours;
-    String date;
-    Boolean approval;
-    String location;
-    String price;
-    String username;
+    private String activityName;
+    private String UID;
+    private String hours;
+    private String date;
+    private Boolean approval;
+    private String location;
+    private String price;
+    private String username;
+    private String email;
 
     public Activity(){
 
     }
 
     public Activity(String activityName, String UID, String hours, String date, Boolean approval, String location, String price) {
-        this.activityName = activityName;
-        this.UID = UID;
-        this.hours = hours;
-        this.date = date;
-        this.approval = approval;
-        this.location = location;
-        this.price = price;
+        this.setActivityName(activityName);
+        this.setUID(UID);
+        this.setHours(hours);
+        this.setDate(date);
+        this.setApproval(approval);
+        this.setLocation(location);
+        this.setPrice(price);
     }
 
     public String getActivityName() {
@@ -91,6 +94,14 @@ public class Activity {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
 
