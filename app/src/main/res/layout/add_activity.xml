@@ -2,7 +2,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        android:text="Add Activity"
+        android:id="@+id/addActivityHeading"
+        />
 
     <EditText
         android:id="@+id/EditeName"
@@ -10,7 +22,7 @@
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:hint="Enter Activity Name" />
+        android:hint="Activity Name" />
 
     <EditText
         android:id="@+id/hours"
@@ -18,7 +30,7 @@
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/EditeName"
-        android:hint="Enter Hours"
+        android:hint="Hours"
         android:inputType="number" />
 
     <EditText
@@ -27,7 +39,7 @@
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/hours"
-        android:hint="Enter Date:  DD/MM/YYYY"
+        android:hint="DD/MM/YYYY"
         android:inputType="datetime" />
 
     <EditText
@@ -36,7 +48,7 @@
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/date"
-        android:hint="Enter Location"
+        android:hint="Location"
         android:inputType="text" />
 
     <EditText
@@ -45,7 +57,7 @@
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/location"
-        android:hint="Enter Amount Spent"
+        android:hint="Amount Spent ($)"
         android:inputType="numberDecimal" />
 
 
@@ -56,5 +68,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/price"
         android:text="Add" />
+</LinearLayout>
+
 
 </RelativeLayout>

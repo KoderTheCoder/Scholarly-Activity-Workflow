@@ -22,6 +22,7 @@
             android:name=".MainActivity2"
             android:label="AIT Scholarly"
             android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait"></activity>
+        <activity android:name=".ViewActivity"></activity>
     </application>
 
 </manifest>

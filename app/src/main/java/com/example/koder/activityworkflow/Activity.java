@@ -13,6 +13,7 @@ public class Activity {
     Boolean approval;
     String location;
     String price;
+    String username;
 
     public Activity(){
 
@@ -82,6 +83,14 @@ public class Activity {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
 

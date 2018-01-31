@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -44,7 +46,7 @@ public class AddActivityFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
-        View myView;
+        final View myView;
         myView = inflater.inflate(R.layout.add_activity, container, false);
 
         //database
@@ -80,8 +82,15 @@ public class AddActivityFragment extends Fragment {
                 activity.date = etTextD.getText().toString();
                 activity.location = etTextL.getText().toString();
                 activity.price = etTextP.getText().toString();
+                activity.username = mAuth.getCurrentUser().getDisplayName();
 
-                mDatabase.child(id).setValue(activity);
+                try{
+                    mDatabase.child(id).setValue(activity);
+                    Snackbar.make(myView, "Activity succesfully added", Snackbar.LENGTH_SHORT).show();
+                }catch (Exception e){
+                    Toast.makeText(myView.getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
