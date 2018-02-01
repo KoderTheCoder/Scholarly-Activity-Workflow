@@ -9,7 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -36,14 +39,15 @@ public class UserAdapterView extends ArrayAdapter<User> {
         //parent is which group of existing viewgroups should we add this
         //and false, we do not want to automatically add it to this parent group
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.activity_item, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.user_item, parent, false);
         }
 
         //get code reference to rowText
-        TextView rowText = (TextView) convertView.findViewById(R.id.rowName);
+        TextView rowText = (TextView) convertView.findViewById(R.id.rowName2);
         //get code reference to rowImage
-        TextView rowActivity = (TextView) convertView.findViewById(R.id.rowActivity);
-        TextView rowDate = (TextView) convertView.findViewById(R.id.rowDate);
+        TextView rowActivity = (TextView) convertView.findViewById(R.id.rowActivity2);
+        TextView rowDate = (TextView) convertView.findViewById(R.id.rowDate2);
+        ImageView profilePic = (ImageView)convertView.findViewById(R.id.list_pic);
 
         //gets current item from our arrayList
         User user = getItem(position);
@@ -51,7 +55,9 @@ public class UserAdapterView extends ArrayAdapter<User> {
         //change the rowText's text
         rowText.setText(user.getName());
         rowActivity.setText(user.getEmail());
-        rowDate.setText(user.getUserID());
+        rowDate.setText("UID: " + user.getUserID());
+        Picasso.with(convertView.getContext()).load(user.getPhotoURL()).placeholder(R.drawable.display_pic)
+                .noFade().into(profilePic);
 
 
         return convertView;

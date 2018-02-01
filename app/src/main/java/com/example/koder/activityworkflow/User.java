@@ -1,5 +1,7 @@
 package com.example.koder.activityworkflow;
 
+import android.net.Uri;
+
 /**
  * Created by Koder on 1/30/2018.
  */
@@ -10,16 +12,18 @@ public class User {
     public String email;
     public String userID;
     public int level;
+    public String photoURL;
 
     public User(){
 
     }
 
-    public User(String name, String email, String userId, int level){
+    public User(String name, String email, String userId, int level, String photoURL){
         this.name = name;
         this.email = email;
         this.userID = userId;
         this.level = level;
+        this.photoURL = photoURL;
     }
 
     public String getName() {
@@ -52,5 +56,13 @@ public class User {
 
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    public String getPhotoURL() {
+        return photoURL;
+    }
+
+    public void setPhotoURL(String photoURL) {
+        this.photoURL = photoURL;
     }
 }

@@ -139,7 +139,7 @@ public class MainActivity extends BaseActivity implements
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            User newUser = new User(user.getDisplayName(), user.getEmail(), user.getUid(), 2);
+                            User newUser = new User(user.getDisplayName(), user.getEmail(), user.getUid(), 2, user.getPhotoUrl().toString());
                             myRef.child("users").child(user.getUid()).setValue(newUser);
                             updateUI(user);
                         } else {

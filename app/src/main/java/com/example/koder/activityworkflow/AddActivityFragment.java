@@ -7,9 +7,13 @@ import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
+import android.view.View.OnClickListener;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -31,6 +35,8 @@ public class AddActivityFragment extends Fragment {
     private EditText etTextL;
     private EditText etTextP;
     private FirebaseAuth mAuth;
+    private Spinner spinner1;
+    private String category;
 
     @Nullable
     @Override
@@ -58,7 +64,29 @@ public class AddActivityFragment extends Fragment {
         etTextP = myView.findViewById(R.id.price);
 
         //Activity
-        final Activity activity = new Activity("","","","",false,"","");
+        final Activity activity = new Activity("","","","",false,"","","");
+
+        Spinner spinner1 = (Spinner) myView.findViewById(R.id.spinner1);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(myView.getContext(), R.array.category_arrays, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner1.setAdapter(adapter);
+
+        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                category = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                category = parent.getItemAtPosition(0).toString();
+            }
+        });
+
+
 
         //Button
         btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +95,7 @@ public class AddActivityFragment extends Fragment {
 
                 if(etTextN.getText().toString().isEmpty() || etTextH.getText().toString().isEmpty() || etTextD.getText().toString().isEmpty() || etTextL.getText().toString().isEmpty() || etTextP.getText().toString().isEmpty()){
                     Toast.makeText(myView.getContext(), "Error: Please fill out all fields", Toast.LENGTH_SHORT).show();
-                }else{
+                } else{
                     String id = mDatabase.push().getKey();
                     activity.setActivityName(etTextN.getText().toString());
                     activity.setUID(uid);
@@ -77,11 +105,16 @@ public class AddActivityFragment extends Fragment {
                     activity.setPrice(etTextP.getText().toString());
                     activity.setUsername(mAuth.getCurrentUser().getDisplayName());
                     activity.setEmail(mAuth.getCurrentUser().getEmail());
+                    activity.setCategory(category);
 
                     try{
                         mDatabase.child(id).setValue(activity);
                         Toast.makeText(myView.getContext(), "Activity Successfully added", Toast.LENGTH_SHORT).show();
-
+                        etTextN.setText("");
+                        etTextH.setText("");
+                        etTextD.setText("");
+                        etTextL.setText("");
+                        etTextP.setText("");
                     }catch (Exception e){
                         Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
                     }
@@ -92,7 +125,5 @@ public class AddActivityFragment extends Fragment {
 
         return myView;
     }
-
-
 
 }

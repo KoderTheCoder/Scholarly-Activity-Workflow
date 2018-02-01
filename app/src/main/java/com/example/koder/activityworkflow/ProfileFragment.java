@@ -88,10 +88,20 @@ public class ProfileFragment extends Fragment {
 
             }
         });
-
+        activities.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                android.app.FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.content_frame, new ViewActivitiesFragment()).commit();
+            }
+        });
+        hours.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                android.app.FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.content_frame, new ViewActivitiesFragment()).commit();
+            }
+        });
         return myView;
-    }
-    private void showData(DataSnapshot dataSnapshot){
-
     }
 }

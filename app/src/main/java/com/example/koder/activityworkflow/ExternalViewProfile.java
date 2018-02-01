@@ -1,5 +1,6 @@
 package com.example.koder.activityworkflow;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by Koder on 2/1/2018.
@@ -49,6 +51,7 @@ public class ExternalViewProfile extends AppCompatActivity{
         email = (TextView)findViewById(R.id.profile_email);
         activities = (TextView)findViewById(R.id.tv1);
         hours = (TextView)findViewById(R.id.tv2);
+        displayPic = (ImageView)findViewById(R.id.ivProfile);
 
         activityCount = 0;
         activityHours = 0;
@@ -68,6 +71,8 @@ public class ExternalViewProfile extends AppCompatActivity{
                 email.setText(user.getEmail());
                 activities.setText(Integer.toString(activityCount));
                 hours.setText(Integer.toString(activityHours));
+                Picasso.with(ExternalViewProfile.this).load(user.getPhotoURL()).placeholder(R.drawable.display_pic)
+                        .noFade().into(displayPic);
             }
 
             @Override

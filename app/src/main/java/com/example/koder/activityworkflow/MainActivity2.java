@@ -27,8 +27,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class MainActivity2 extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -37,6 +41,7 @@ public class MainActivity2 extends AppCompatActivity
     FirebaseAuth mAuth;
     TextView username;
     TextView email;
+    private ArrayList<Activity> activityArray = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +88,22 @@ public class MainActivity2 extends AppCompatActivity
         username.setText(mAuth.getCurrentUser().getDisplayName());
         email = (TextView) headerView.findViewById(R.id.userEmail);
         email.setText(mAuth.getCurrentUser().getEmail());
+
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds : dataSnapshot.child("activity").getChildren()){
+                    Activity activity = ds.getValue(Activity.class);
+                    activityArray.add(activity);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -99,6 +120,8 @@ public class MainActivity2 extends AppCompatActivity
     {
         final MenuItem item = menu.findItem(R.id.approve_activities_button);
         final MenuItem item2 = menu.findItem(R.id.view_users_button);
+        final MenuItem item3 = menu.findItem(R.id.view_all_activities);
+        final MenuItem item4 = menu.findItem(R.id.generate_summary);
 
         FirebaseDatabase.getInstance().getReference().child("admins")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -108,6 +131,8 @@ public class MainActivity2 extends AppCompatActivity
                             if(!(snapshot.getValue(User.class).getEmail().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail()))){
                                 item.setVisible(false);
                                 item2.setVisible(false);
+                                item3.setVisible(false);
+                                item4.setVisible(false);
                             }
                         }
                     }
@@ -153,6 +178,9 @@ public class MainActivity2 extends AppCompatActivity
             frag.setArguments(bundle);
             android.app.FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame, frag).commit();
+        }else if(id == R.id.generate_summary){
+            new GenerateSummary().writeToFile(summary());
+            Snackbar.make(getCurrentFocus(),"Activity Summary Generated", Snackbar.LENGTH_SHORT).show();
         }
 
         return super.onOptionsItemSelected(item);
@@ -175,8 +203,6 @@ public class MainActivity2 extends AppCompatActivity
             fragmentManager.beginTransaction().replace(R.id.content_frame, new ResumeFragment()).commit();
         } else if (id == R.id.nav_share) {
             fragmentManager.beginTransaction().replace(R.id.content_frame, new AboutFragment()).commit();
-        } else if (id == R.id.nav_send) {
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -195,5 +221,25 @@ public class MainActivity2 extends AppCompatActivity
                         finish();
                     }
                 });
+    }
+
+    private String summary(){
+        String text;
+        Collections.reverse(activityArray);
+        text = "Total Activities: " + Integer.toString(activityArray.size()) +"\n";
+        for(Activity act : activityArray){
+            if(act.getApproval()){
+                text += "**************************\n\n";
+                text += "Activity: " + act.getCategory() +"\n";
+                text += "Description: " + act.getActivityName() +"\n";
+                text += "Completed by: " + act.getUsername() +"\n";
+                text += "Email: " + act.getEmail() +"\n";
+                text += "Date: " + act.getDate() +"\n";
+                text += "Hours: " + act.getHours() +"\n";
+                text += "Location: " + act.getLocation() +"\n";
+                text += "Price: $" + act.getPrice() +"\n\n";
+            }
+        }
+        return text;
     }
 }

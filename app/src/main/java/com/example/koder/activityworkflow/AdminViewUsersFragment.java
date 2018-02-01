@@ -21,6 +21,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by Koder on 2/1/2018.
@@ -74,6 +75,7 @@ public class AdminViewUsersFragment extends Fragment {
                     userArray.add(user);
                     count++;
                 }
+                Collections.reverse(userArray);
                 userAdapter = new UserAdapterView(getActivity(), userArray);
                 mListView.setAdapter(userAdapter);
                 userAdapter.notifyDataSetChanged();

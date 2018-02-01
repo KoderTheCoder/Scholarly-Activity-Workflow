@@ -17,6 +17,11 @@
         android:title="View Users"
         app:showAsAction="never" />
     <item
+        android:id="@+id/generate_summary"
+        android:orderInCategory="100"
+        android:title="Generate Summary"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/logout_button"
         android:orderInCategory="100"
         android:title="Logout"

@@ -17,12 +17,13 @@ public class Activity implements Serializable{
     private String price;
     private String username;
     private String email;
+    private String category;
 
     public Activity(){
 
     }
 
-    public Activity(String activityName, String UID, String hours, String date, Boolean approval, String location, String price) {
+    public Activity(String activityName, String UID, String hours, String date, Boolean approval, String location, String price, String category) {
         this.setActivityName(activityName);
         this.setUID(UID);
         this.setHours(hours);
@@ -30,6 +31,7 @@ public class Activity implements Serializable{
         this.setApproval(approval);
         this.setLocation(location);
         this.setPrice(price);
+        this.setCategory(category);
     }
 
     public String getActivityName() {
@@ -102,6 +104,14 @@ public class Activity implements Serializable{
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }
 

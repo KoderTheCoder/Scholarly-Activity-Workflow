@@ -1,10 +1,12 @@
 package com.example.koder.activityworkflow;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -40,6 +42,7 @@ public class AdminAdapterView extends ArrayAdapter<Activity> {
         //get code reference to rowImage
         TextView rowActivity = (TextView) convertView.findViewById(R.id.rowActivity);
         TextView rowDate = (TextView) convertView.findViewById(R.id.rowDate);
+        LinearLayout layout = (LinearLayout)convertView.findViewById(R.id.list_items);
 
         //gets current item from our arrayList
         Activity text = getItem(position);
@@ -48,6 +51,10 @@ public class AdminAdapterView extends ArrayAdapter<Activity> {
         rowText.setText(text.getUsername());
         rowActivity.setText(text.getActivityName());
         rowDate.setText(text.getDate());
+
+        if(text.getApproval() == false){
+            layout.setBackgroundColor(Color.parseColor("#ff918f"));
+        }
 
 
         return convertView;

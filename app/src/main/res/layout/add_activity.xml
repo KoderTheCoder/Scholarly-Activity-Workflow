@@ -5,7 +5,9 @@
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="10dp"
+    >
 
     <TextView
         android:layout_width="match_parent"
@@ -16,13 +18,24 @@
         android:id="@+id/addActivityHeading"
         />
 
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:entries="@array/category_arrays"
+        android:prompt="@string/category_prompt"
+        style="@android:style/Widget.Spinner.DropDown"
+        android:spinnerMode="dropdown"
+        />
+
     <EditText
         android:id="@+id/EditeName"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:hint="Activity Name" />
+        android:hint="Description" />
 
     <EditText
         android:id="@+id/hours"

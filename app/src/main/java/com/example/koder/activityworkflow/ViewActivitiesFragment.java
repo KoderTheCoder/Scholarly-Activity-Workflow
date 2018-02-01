@@ -25,6 +25,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by Koder on 1/24/2018.
@@ -38,7 +39,6 @@ public class ViewActivitiesFragment extends Fragment {
     MyAdapter adapter;
     AdminAdapterView adapterAdmin;
     ListView mListView;
-    String name;
     ArrayList<Activity> activityArray;
     boolean approval;
     boolean adminView;
@@ -83,6 +83,17 @@ public class ViewActivitiesFragment extends Fragment {
 
             }
         });
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -102,18 +113,24 @@ public class ViewActivitiesFragment extends Fragment {
                             count++;
                         }
                     }
-                    adapterAdmin = new AdminAdapterView(getActivity(), activityArray);
-                    mListView.setAdapter(adapterAdmin);
-                    adapterAdmin.notifyDataSetChanged();
+                    Collections.reverse(activityArray);
+                    if(getActivity() != null){
+                        adapterAdmin = new AdminAdapterView(getActivity(), activityArray);
+                        mListView.setAdapter(adapterAdmin);
+                        adapterAdmin.notifyDataSetChanged();
+                    }
                 }else if(adminView){
                     for(DataSnapshot ds : dataSnapshot.child("activity").getChildren()){
                         Activity activity = ds.getValue(Activity.class);
                         activityArray.add(activity);
                         count++;
                     }
-                    adapterAdmin = new AdminAdapterView(getActivity(), activityArray);
-                    mListView.setAdapter(adapterAdmin);
-                    adapterAdmin.notifyDataSetChanged();
+                    Collections.reverse(activityArray);
+                    if(getActivity() != null){
+                        adapterAdmin = new AdminAdapterView(getActivity(), activityArray);
+                        mListView.setAdapter(adapterAdmin);
+                        adapterAdmin.notifyDataSetChanged();
+                    }
                 }else{
                     for(DataSnapshot ds : dataSnapshot.child("activity").getChildren()){
                         Activity activity = ds.getValue(Activity.class);
@@ -122,9 +139,12 @@ public class ViewActivitiesFragment extends Fragment {
                             count++;
                         }
                     }
-                    adapter = new MyAdapter(getActivity(), activityArray);
-                    mListView.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
+                    Collections.reverse(activityArray);
+                    if (getActivity()!=null) {
+                        adapter = new MyAdapter(getActivity(), activityArray);
+                        mListView.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+                    }
                 }
                 TextView numActivities= (TextView)myView.findViewById(R.id.numberOfActivities);
                 numActivities.setText(Integer.toString(count) + " Activities");
@@ -147,11 +167,6 @@ public class ViewActivitiesFragment extends Fragment {
         });
 
         return myView;
-    }
-
-    private void showData(DataSnapshot dataSnapshot) {
-
-
     }
 
 //    @Override
