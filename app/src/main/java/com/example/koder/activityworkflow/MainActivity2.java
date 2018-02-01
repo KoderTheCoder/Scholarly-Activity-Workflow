@@ -98,6 +98,7 @@ public class MainActivity2 extends AppCompatActivity
     public boolean onPrepareOptionsMenu(Menu menu)
     {
         final MenuItem item = menu.findItem(R.id.approve_activities_button);
+        final MenuItem item2 = menu.findItem(R.id.view_users_button);
 
         FirebaseDatabase.getInstance().getReference().child("admins")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -106,6 +107,7 @@ public class MainActivity2 extends AppCompatActivity
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             if(!(snapshot.getValue(User.class).getEmail().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail()))){
                                 item.setVisible(false);
+                                item2.setVisible(false);
                             }
                         }
                     }
@@ -137,6 +139,16 @@ public class MainActivity2 extends AppCompatActivity
         }else if(id == R.id.approve_activities_button){
             Bundle bundle = new Bundle();
             bundle.putString("Approval", "TRUE");
+            ViewActivitiesFragment frag = new ViewActivitiesFragment();
+            frag.setArguments(bundle);
+            android.app.FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, frag).commit();
+        }else if(id == R.id.view_users_button){
+            android.app.FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, new AdminViewUsersFragment()).commit();
+        }else if(id == R.id.view_all_activities){
+            Bundle bundle = new Bundle();
+            bundle.putString("AdminView", "TRUE");
             ViewActivitiesFragment frag = new ViewActivitiesFragment();
             frag.setArguments(bundle);
             android.app.FragmentManager fragmentManager = getFragmentManager();

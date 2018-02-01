@@ -65,22 +65,26 @@ public class AddActivityFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                String id = mDatabase.push().getKey();
-                activity.setActivityName(etTextN.getText().toString());
-                activity.setUID(uid);
-                activity.setHours(etTextH.getText().toString());
-                activity.setDate(etTextD.getText().toString());
-                activity.setLocation(etTextL.getText().toString());
-                activity.setPrice(etTextP.getText().toString());
-                activity.setUsername(mAuth.getCurrentUser().getDisplayName());
-                activity.setEmail(mAuth.getCurrentUser().getEmail());
+                if(etTextN.getText().toString().isEmpty() || etTextH.getText().toString().isEmpty() || etTextD.getText().toString().isEmpty() || etTextL.getText().toString().isEmpty() || etTextP.getText().toString().isEmpty()){
+                    Toast.makeText(myView.getContext(), "Error: Please fill out all fields", Toast.LENGTH_SHORT).show();
+                }else{
+                    String id = mDatabase.push().getKey();
+                    activity.setActivityName(etTextN.getText().toString());
+                    activity.setUID(uid);
+                    activity.setHours(etTextH.getText().toString());
+                    activity.setDate(etTextD.getText().toString());
+                    activity.setLocation(etTextL.getText().toString());
+                    activity.setPrice(etTextP.getText().toString());
+                    activity.setUsername(mAuth.getCurrentUser().getDisplayName());
+                    activity.setEmail(mAuth.getCurrentUser().getEmail());
 
-                try{
-                    mDatabase.child(id).setValue(activity);
-                    Toast.makeText(myView.getContext(), "Activity Successfully added", Toast.LENGTH_SHORT).show();
+                    try{
+                        mDatabase.child(id).setValue(activity);
+                        Toast.makeText(myView.getContext(), "Activity Successfully added", Toast.LENGTH_SHORT).show();
 
-                }catch (Exception e){
-                    Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                    }catch (Exception e){
+                        Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                    }
                 }
 
             }

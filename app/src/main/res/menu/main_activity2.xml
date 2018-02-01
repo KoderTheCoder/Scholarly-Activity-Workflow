@@ -2,13 +2,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/logout_button"
+        android:id="@+id/view_all_activities"
         android:orderInCategory="100"
-        android:title="Logout"
+        android:title="View User activities"
         app:showAsAction="never" />
     <item
         android:id="@+id/approve_activities_button"
         android:orderInCategory="100"
         android:title="Approve Activities"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/view_users_button"
+        android:orderInCategory="100"
+        android:title="View Users"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/logout_button"
+        android:orderInCategory="100"
+        android:title="Logout"
         app:showAsAction="never" />
 </menu>

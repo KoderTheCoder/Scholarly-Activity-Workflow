@@ -54,7 +54,11 @@ public class ViewActivitiesFragment extends Fragment {
         activityArray = new ArrayList<>();
 
         if(getArguments() != null){
-            approval = true;
+            if(getArguments().get("Approval") == "TRUE"){
+                approval = true;
+            }else{
+                adminView = true;
+            }
         }
 
         //database stuff
@@ -102,7 +106,14 @@ public class ViewActivitiesFragment extends Fragment {
                     mListView.setAdapter(adapterAdmin);
                     adapterAdmin.notifyDataSetChanged();
                 }else if(adminView){
-
+                    for(DataSnapshot ds : dataSnapshot.child("activity").getChildren()){
+                        Activity activity = ds.getValue(Activity.class);
+                        activityArray.add(activity);
+                        count++;
+                    }
+                    adapterAdmin = new AdminAdapterView(getActivity(), activityArray);
+                    mListView.setAdapter(adapterAdmin);
+                    adapterAdmin.notifyDataSetChanged();
                 }else{
                     for(DataSnapshot ds : dataSnapshot.child("activity").getChildren()){
                         Activity activity = ds.getValue(Activity.class);
