@@ -86,14 +86,26 @@
 
     <string-array name="category_arrays">
         <item>Conference</item>
-        <item>Book</item>
-        <item>Blog</item>
+        <item>Reading</item>
+        <item>Writing</item>
         <item>Game Dev</item>
         <item>Film</item>
         <item>App Dev</item>
         <item>Graphics Design</item>
         <item>Animation</item>
+        <item>Expo</item>
+        <item>Competition</item>
+        <item>Internet Publication</item>
+        <item>Presentation</item>
+        <item>Lecture</item>
+        <item>Seminar</item>
+        <item>Workshop</item>
+        <item>Research</item>
+        <item>Performance/Show</item>
+        <item>Patent</item>
+        <item>Magazine</item>
         <item>Other</item>
+
     </string-array>
 
 </resources>
