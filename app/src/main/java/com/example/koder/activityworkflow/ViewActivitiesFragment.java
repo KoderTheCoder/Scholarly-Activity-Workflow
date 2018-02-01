@@ -35,7 +35,6 @@ public class ViewActivitiesFragment extends Fragment {
     private static final String TAG = "ViewDatabase";
 
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
     MyAdapter adapter;
     AdminAdapterView adapterAdmin;
     ListView mListView;
@@ -89,6 +88,7 @@ public class ViewActivitiesFragment extends Fragment {
                 //int childCount = (int)dataSnapshot.child("activity").getChildrenCount();
                 //array.add(childCount + " Activities");
                 int count = 0;
+                activityArray.clear();
 
                 if(approval){
                     for(DataSnapshot ds : dataSnapshot.child("activity").getChildren()){

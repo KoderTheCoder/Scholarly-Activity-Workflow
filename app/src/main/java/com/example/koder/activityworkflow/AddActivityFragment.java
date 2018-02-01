@@ -77,9 +77,10 @@ public class AddActivityFragment extends Fragment {
 
                 try{
                     mDatabase.child(id).setValue(activity);
-                    Snackbar.make(myView, "Activity succesfully added", Snackbar.LENGTH_SHORT).show();
+                    Toast.makeText(myView.getContext(), "Activity Successfully added", Toast.LENGTH_SHORT).show();
+
                 }catch (Exception e){
-                    Toast.makeText(myView.getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
                 }
 
             }

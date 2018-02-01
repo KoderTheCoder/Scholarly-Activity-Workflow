@@ -40,6 +40,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:textSize="18sp"
+                android:textColor="#2323c1"
                 android:text="username "
                 android:id="@+id/viewActivity_name"
                 />

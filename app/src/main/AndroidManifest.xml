@@ -23,6 +23,7 @@
             android:label="AIT Scholarly"
             android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait"></activity>
         <activity android:name=".ViewActivity"></activity>
+        <activity android:name=".ExternalViewProfile"></activity>
     </application>
 
 </manifest>

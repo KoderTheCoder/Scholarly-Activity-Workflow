@@ -1,11 +1,14 @@
 package com.example.koder.activityworkflow;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -22,6 +25,7 @@ import org.w3c.dom.Text;
 
 public class ViewActivity extends AppCompatActivity{
     Activity activity;
+    String activityID;
     TextView username;
     TextView email;
     TextView activityName;
@@ -68,15 +72,26 @@ public class ViewActivity extends AppCompatActivity{
         location.setText(activity.getLocation());
         price.setText("$"+activity.getPrice());
         approved.setText(activity.getApproval().toString());
+        if(activity.getApproval() == true){
+            approved.setTextColor(getResources().getColor(R.color.green));
+        }
 
-        FirebaseDatabase.getInstance().getReference().child("admins")
+        FirebaseDatabase.getInstance().getReference()
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        for (DataSnapshot snapshot : dataSnapshot.child("admins").getChildren()) {
                             if(snapshot.getValue(User.class).getEmail().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())){
-                                approvedBtn.setVisibility(View.VISIBLE);
-                                rejectBtn.setVisibility(View.VISIBLE);
+                                if(!activity.getApproval()) {
+                                    approvedBtn.setVisibility(View.VISIBLE);
+                                    rejectBtn.setVisibility(View.VISIBLE);
+                                }
+                            }
+
+                        }
+                        for (DataSnapshot snapshot : dataSnapshot.child("activity").getChildren()) {
+                            if(snapshot.getValue(Activity.class).getActivityName().equals(activity.getActivityName())){
+                                activityID = snapshot.getKey();
                             }
 
                         }
@@ -86,5 +101,31 @@ public class ViewActivity extends AppCompatActivity{
                     }
                 });
 
+        approvedBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myRef.child("activity").child(activityID).child("approval").setValue(true);
+                approvedBtn.setVisibility(View.INVISIBLE);
+                rejectBtn.setVisibility(View.INVISIBLE);
+                approved.setText(R.string.approved_text);
+                approved.setTextColor(getResources().getColor(R.color.green));
+            }
+        });
+        rejectBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myRef.child("activity").child(activityID).removeValue();
+                Toast.makeText(ViewActivity.this, "Activity Removed", Toast.LENGTH_LONG).show();
+                finish();
+            }
+        });
+        username.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent viewProfile = new Intent(ViewActivity.this, ExternalViewProfile.class);
+                viewProfile.putExtra("userID", activity.getUID());
+                startActivity(viewProfile);
+            }
+        });
     }
 }
